@@ -36,7 +36,6 @@ public class TenantService {
         existing.setStatus(updated.getStatus());
         tenantRepository.save(existing);
     }
-
     private void disableTenant(String tenantCode){
         if(tenantCode==null){
             throw new IllegalArgumentException("TenantCode is Empty");
