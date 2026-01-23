@@ -3,6 +3,8 @@ package com.rulex.rulex.Repositories;
 import com.rulex.rulex.Entity.Rules;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RulesRepository extends JpaRepository<Rules,Long> {
+import java.util.List;
 
+public interface RulesRepository extends JpaRepository<Rules,Long> {
+    List<Rules> findByPolicyIdAndActiveTrueOrderByPriorityAsc(Long policyId);
 }
