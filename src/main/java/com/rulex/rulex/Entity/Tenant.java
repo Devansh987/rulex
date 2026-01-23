@@ -20,6 +20,10 @@ public class Tenant {
     @Column(name = "tenant_code", nullable = false,unique = true)
     private String tenantCode;
 
+    @NotBlank
+    @Column(name = "tenant_name",nullable = false)
+    private String tenant_name;
+
     @NotNull
     @Column(nullable = false)
     private String status;
