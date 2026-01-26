@@ -30,14 +30,14 @@ public class TenantService {
         return tenant;
     }
 
-    public void updateTenant(String code, Tenant updated) {
+    public Tenant updateTenant(String code, Tenant updated) {
         if (updated == null) {
             throw new IllegalArgumentException("Updated tenant data cannot be null");
         }
         Tenant existing = getTenantByCode(code); // reuse validation
         existing.setTenant_name(updated.getTenant_name());
         existing.setStatus(updated.getStatus());
-        tenantRepository.save(existing);
+        return tenantRepository.save(existing);
     }
     public void disableTenant(String tenantCode){
         if(tenantCode==null){
