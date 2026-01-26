@@ -6,20 +6,23 @@ import com.rulex.rulex.Repositories.TenantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class TenantService {
 
     @Autowired
     private TenantRepository tenantRepository;
 
-    protected void createTenant(Tenant tenant) {
+    public Tenant createTenant(Tenant tenant) {
         if (tenant == null) {
             throw new IllegalArgumentException("Tenant cannot be null");
         }
-        tenantRepository.save(tenant);
+        tenant.setCreatedAt(LocalDateTime.now());
+        return tenantRepository.save(tenant);
     }
 
-    protected Tenant getTenantByCode(String tenantCode) {
+    public Tenant getTenantByCode(String tenantCode) {
         Tenant tenant = tenantRepository.findByTenantCode(tenantCode);
         if (tenant == null) {
             throw new RuntimeException("Tenant not found for tenantCode: " + tenantCode);
@@ -27,7 +30,7 @@ public class TenantService {
         return tenant;
     }
 
-   protected void updateTenant(String code, Tenant updated) {
+    public void updateTenant(String code, Tenant updated) {
         if (updated == null) {
             throw new IllegalArgumentException("Updated tenant data cannot be null");
         }
@@ -36,7 +39,7 @@ public class TenantService {
         existing.setStatus(updated.getStatus());
         tenantRepository.save(existing);
     }
-    protected void disableTenant(String tenantCode){
+    public void disableTenant(String tenantCode){
         if(tenantCode==null){
             throw new IllegalArgumentException("TenantCode is Empty");
         }
