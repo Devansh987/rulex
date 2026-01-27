@@ -5,6 +5,9 @@ import com.rulex.rulex.Repositories.PolicyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Service
 public class PolicyService {
         @Autowired
@@ -15,18 +18,24 @@ public class PolicyService {
 
 
 
-        protected void createPolicy(String tenantCode , Policy policy){
+        public Policy createPolicy(String tenantCode , Policy policy){
             if(policy == null){
                 throw new IllegalArgumentException("policy is invalid");
             }
             Tenant tenant = tenantService.getTenantByCode(tenantCode);
             policy.setTenant(tenant);
             policy.setStatus("Active");
-            policyRepository.save(policy);
+            policy.setCreatedAt(LocalDateTime.now());
+            return policyRepository.save(policy);
 
         }
 
-        protected Policy getPolicyByCode(String tenantCode,String policyCode){
+        public List<Policy> getALLPolicy(String tenantCode){
+            Tenant tenant = tenantService.getTenantByCode(tenantCode);
+           return policyRepository.findAllByTenantId(tenant.getId());
+        }
+
+     public Policy getPolicyByCode(String tenantCode,String policyCode){
            Tenant tenant = tenantService.getTenantByCode(tenantCode);
            Policy policy = policyRepository.findByTenantIdAndPolicyCode(tenant.getId(),policyCode);
            if(policy == null){
@@ -35,20 +44,20 @@ public class PolicyService {
            return policy;
         }
 
-        protected void updatePolicy(Policy updatedPolicy,String policyCode,String tenantCode){
+    public Policy updatePolicy(Policy updatedPolicy,String policyCode,String tenantCode){
             if(updatedPolicy == null){
                 throw new IllegalArgumentException("policy is invalid");
             }
             Policy existingPolicy = getPolicyByCode(tenantCode,policyCode);
             existingPolicy.setDescription(updatedPolicy.getDescription());
             existingPolicy.setStatus(updatedPolicy.getStatus());
-            policyRepository.save(existingPolicy);
+            return policyRepository.save(existingPolicy);
         }
 
-        protected void disable(String policyCode,String tenantCode){
+    public Policy disable(String policyCode,String tenantCode){
             Policy policy = getPolicyByCode(tenantCode,policyCode);
             policy.setStatus("Inactive");
-            policyRepository.save(policy);
+            return policyRepository.save(policy);
 
         }
 }
