@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import  com.rulex.rulex.Entity.Policy;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @Table(name = "Rules")
-public class Rules {
+public class Rule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

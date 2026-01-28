@@ -1,7 +1,7 @@
 package com.rulex.rulex.Service;
 
 import com.rulex.rulex.Entity.Policy;
-import com.rulex.rulex.Entity.Rules;
+import com.rulex.rulex.Entity.Rule;
 import com.rulex.rulex.Entity.Tenant;
 import com.rulex.rulex.Repositories.PolicyRepository;
 import com.rulex.rulex.Repositories.RulesRepository;
@@ -25,7 +25,7 @@ public class PolicyEvaluationService {
     private RulesRepository rulesRepository;
 
 
-    private List<Rules> evaluatePolicy(String tenantCode , String policyCode, Map<Policy,Object> inputRules){
+    private List<Rule> evaluatePolicy(String tenantCode , String policyCode, Map<Policy,Object> inputRules){
         Tenant tenant = resolveTenant(tenantCode);
         Policy policy  = resolvePolicy(tenant.getId(),policyCode);
         return loadActiveRules(policy.getId());
@@ -51,8 +51,8 @@ public class PolicyEvaluationService {
         return  policy;
     }
 
-    private List<Rules> loadActiveRules(Long policyId){
-        List<Rules> rules = rulesRepository.findByPolicyIdAndActiveTrueOrderByPriorityAsc(policyId);
+    private List<Rule> loadActiveRules(Long policyId){
+        List<Rule> rules = rulesRepository.findByPolicyIdAndActiveTrueOrderByPriorityAsc(policyId);
         return rules;
     }
 }
