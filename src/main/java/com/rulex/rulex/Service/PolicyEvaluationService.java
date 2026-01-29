@@ -1,5 +1,7 @@
 package com.rulex.rulex.Service;
 
+import com.rulex.rulex.DTO.DecisionClass;
+import com.rulex.rulex.Engine.RuleEngine;
 import com.rulex.rulex.Entity.Policy;
 import com.rulex.rulex.Entity.Rule;
 import com.rulex.rulex.Entity.Tenant;
@@ -24,16 +26,18 @@ public class PolicyEvaluationService {
     @Autowired
     private RulesRepository rulesRepository;
 
+    @Autowired
+    private RuleEngine ruleEngine;
 
-    private List<Rule> evaluatePolicy(String tenantCode , String policyCode, Map<Policy,Object> inputRules){
+
+    public DecisionClass evaluatePolicy(String tenantCode , String policyCode, Map<String,Object> facts){
         Tenant tenant = resolveTenant(tenantCode);
         Policy policy  = resolvePolicy(tenant.getId(),policyCode);
-        return loadActiveRules(policy.getId());
+         List<Rule> rules = loadActiveRules(policy.getId());
+         return ruleEngine.evaluate(rules,facts);
     }
 
-
-
-    private Tenant resolveTenant(String tenantCode) {
+    public Tenant resolveTenant(String tenantCode) {
         Tenant tenant = tenantRepository.findByTenantCode(tenantCode);
         if (tenant == null) {
             throw new RuntimeException("Tenant not found for tenantCode: " + tenantCode);
@@ -42,7 +46,7 @@ public class PolicyEvaluationService {
     }
 
 
-    private Policy resolvePolicy(Long TenantId , String PolicyCode){
+    public Policy resolvePolicy(Long TenantId , String PolicyCode){
         Policy policy = policyRepository.findByTenantIdAndPolicyCode(TenantId,PolicyCode);
         if(policy==null){
             throw new RuntimeException("Policy not found with tenantCode"+TenantId+" and PolicyCode "+PolicyCode);
@@ -51,7 +55,7 @@ public class PolicyEvaluationService {
         return  policy;
     }
 
-    private List<Rule> loadActiveRules(Long policyId){
+    public List<Rule> loadActiveRules(Long policyId){
         List<Rule> rules = rulesRepository.findByPolicyIdAndActiveTrueOrderByPriorityAsc(policyId);
         return rules;
     }
