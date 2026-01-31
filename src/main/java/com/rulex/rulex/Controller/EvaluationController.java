@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/client/api")
 public class EvaluationController {
     @Autowired
     private PolicyEvaluationService policyEvaluationService;
