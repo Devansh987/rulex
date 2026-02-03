@@ -40,8 +40,9 @@ public class UserService {
     public User updateUser(String userName,User user1){
         User user = userRepo.findByUserName(userName);
         user.setUserName(user1.getUserName());
-        user.setPassword(user.getPassword());
-        user.setRole(user.getRole());
+        user.setPassword(user1.getPassword());
+        user.setRole(user1.getRole());
+        user.setEmail(user1.getEmail());
         return userRepo.save(user);
     }
 
