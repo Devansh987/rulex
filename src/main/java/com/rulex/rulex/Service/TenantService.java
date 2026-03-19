@@ -2,6 +2,7 @@ package com.rulex.rulex.Service;
 
 
 import com.rulex.rulex.Entity.Tenant;
+import com.rulex.rulex.Exception.CustomException.TenantNotFOUNDEXCEPTION;
 import com.rulex.rulex.Repositories.TenantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class TenantService {
     public Tenant getTenantByCode(String tenantCode) {
         Tenant tenant = tenantRepository.findByTenantCode(tenantCode);
         if (tenant == null) {
-            throw new RuntimeException("Tenant not found for tenantCode: " + tenantCode);
+            throw new TenantNotFOUNDEXCEPTION("Tenant not found for tenantCode: " + tenantCode);
         }
         return tenant;
     }
@@ -34,7 +35,7 @@ public class TenantService {
         if (updated == null) {
             throw new IllegalArgumentException("Updated tenant data cannot be null");
         }
-        Tenant existing = getTenantByCode(code); // reuse validation
+        Tenant existing = getTenantByCode(code);
         existing.setTenant_name(updated.getTenant_name());
         existing.setStatus(updated.getStatus());
         return tenantRepository.save(existing);
@@ -44,6 +45,7 @@ public class TenantService {
             throw new IllegalArgumentException("TenantCode is Empty");
         }
         Tenant tenant = getTenantByCode(tenantCode);
+
         tenant.setStatus("Inactive");
         tenantRepository.save(tenant);
     }

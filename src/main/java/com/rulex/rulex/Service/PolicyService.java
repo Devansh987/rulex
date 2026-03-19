@@ -1,6 +1,8 @@
 package com.rulex.rulex.Service;
 import com.rulex.rulex.Entity.Policy;
 import com.rulex.rulex.Entity.Tenant;
+import com.rulex.rulex.Exception.CustomException.PolicyNotFound;
+import com.rulex.rulex.Exception.CustomException.TenantNotFOUNDEXCEPTION;
 import com.rulex.rulex.Repositories.PolicyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +41,7 @@ public class PolicyService {
            Tenant tenant = tenantService.getTenantByCode(tenantCode);
            Policy policy = policyRepository.findByTenantIdAndPolicyCode(tenant.getId(),policyCode);
            if(policy == null){
-               throw new RuntimeException("policy not found");
+               throw new PolicyNotFound("policy not found");
            }
            return policy;
         }
@@ -58,6 +60,5 @@ public class PolicyService {
             Policy policy = getPolicyByCode(tenantCode,policyCode);
             policy.setStatus("Inactive");
             return policyRepository.save(policy);
-
         }
 }

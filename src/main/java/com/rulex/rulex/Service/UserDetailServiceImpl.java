@@ -1,6 +1,7 @@
 package com.rulex.rulex.Service;
 
 import com.rulex.rulex.Entity.User;
+import com.rulex.rulex.Exception.CustomException.UserNotFound;
 import com.rulex.rulex.Repositories.UserRepo;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,9 +21,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         User user = userRepo.findByUserName(username);
-        if(user==null){
-            throw new UsernameNotFoundException("User does not Exists");
-        }
+
+            if(user==null) throw new UserNotFound("User Not Found");
+
 
         return org.springframework.security.core.userdetails.User.withUsername(user.getUserName())
                 .password(user.getPassword()).authorities("ROLE_" + user.getRole().name()).build();

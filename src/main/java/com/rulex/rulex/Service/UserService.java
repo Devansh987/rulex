@@ -3,6 +3,7 @@ package com.rulex.rulex.Service;
 
 import com.rulex.rulex.Entity.Role;
 import com.rulex.rulex.Entity.User;
+import com.rulex.rulex.Exception.CustomException.UserNotFound;
 import com.rulex.rulex.Repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,11 +35,13 @@ public class UserService {
     }
 
     public User findByUserName(String name){
-        return userRepo.findByUserName(name);
+        User user =  userRepo.findByUserName(name);
+        if(user==null) throw new UserNotFound("User not found");
+        return user;
     }
 
     public User updateUser(String userName,User user1){
-        User user = userRepo.findByUserName(userName);
+        User user = findByUserName(userName);
         user.setUserName(user1.getUserName());
         user.setPassword(user1.getPassword());
         user.setRole(user1.getRole());
@@ -47,7 +50,7 @@ public class UserService {
     }
 
     public void deleteUserByUserName(String userName){
-        User user = userRepo.findByUserName(userName);
+        User user = findByUserName(userName);
         userRepo.delete(user);
     }
 }

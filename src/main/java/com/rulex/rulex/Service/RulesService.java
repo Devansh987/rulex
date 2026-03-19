@@ -3,6 +3,7 @@ package com.rulex.rulex.Service;
 import com.rulex.rulex.Entity.Policy;
 import com.rulex.rulex.Entity.Rule;
 import com.rulex.rulex.Entity.Tenant;
+import com.rulex.rulex.Exception.CustomException.RuleNotFound;
 import com.rulex.rulex.Repositories.RulesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,7 @@ public class RulesService {
     }
 
     public void disableRule(Long ruleId){
-        Rule existing = rulesRepository.findById(ruleId).orElseThrow(()-> new RuntimeException("Rule not found with id: " + ruleId));
+        Rule existing = rulesRepository.findById(ruleId).orElseThrow(()-> new RuleNotFound("Rule not found with id: " + ruleId));
         existing.setActive(false);
         rulesRepository.save(existing);
     }
