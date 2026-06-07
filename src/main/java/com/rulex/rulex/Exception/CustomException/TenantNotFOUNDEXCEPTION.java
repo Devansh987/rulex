@@ -1,7 +1,7 @@
 package com.rulex.rulex.Exception.CustomException;
 
-public class TenantNotFOUNDEXCEPTION extends RuntimeException {
-    public  TenantNotFOUNDEXCEPTION(String message){
+public class TenantNotFoundException extends RuntimeException {
+    public TenantNotFoundException(String message){
         super(message);
     }
 }

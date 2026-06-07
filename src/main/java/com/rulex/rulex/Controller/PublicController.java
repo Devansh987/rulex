@@ -5,7 +5,7 @@ import com.rulex.rulex.Entity.User;
 import com.rulex.rulex.Service.EmailService;
 import com.rulex.rulex.Service.UserDetailServiceImpl;
 import com.rulex.rulex.Service.UserService;
-import com.rulex.rulex.utiil.JwtUtil;
+import com.rulex.rulex.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,14 +39,14 @@ public class PublicController {
         return new ResponseEntity<>(userService.saveNewUser(user), HttpStatus.OK);
     }
 
-
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
         try{
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
             UserDetails userDetails = userDetailService.loadUserByUsername(user.getUserName());
-            String jwt = jwtUtil.generateToken(userDetails.getUsername());
+            String role = userDetails.getAuthorities().iterator().next().getAuthority();
+            String jwt = jwtUtil.generateToken(userDetails.getUsername(), role);
 
             return new ResponseEntity<>(jwt, HttpStatus.OK);
         }catch (Exception e){

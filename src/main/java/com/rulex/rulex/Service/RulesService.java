@@ -27,7 +27,7 @@ public class RulesService {
         Policy policy = policyService.getPolicyByCode(tenantCode,PolicyCode);
         rule.setPolicy(policy);
         rule.setActive(true);
-        rule.setCreated_at(LocalDateTime.now());
+        rule.setCreatedAt(LocalDateTime.now());
         return rulesRepository.save(rule);
     }
 

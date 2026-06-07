@@ -2,7 +2,7 @@ package com.rulex.rulex.Service;
 import com.rulex.rulex.Entity.Policy;
 import com.rulex.rulex.Entity.Tenant;
 import com.rulex.rulex.Exception.CustomException.PolicyNotFound;
-import com.rulex.rulex.Exception.CustomException.TenantNotFOUNDEXCEPTION;
+import com.rulex.rulex.Exception.CustomException.TenantNotFoundException;
 import com.rulex.rulex.Repositories.PolicyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -22,7 +22,7 @@ public class Tenant {
 
     @NotBlank
     @Column(name = "tenant_name",nullable = false)
-    private String tenant_name;
+    private String tenantName;
 
     @NotNull
     @Column(nullable = false)

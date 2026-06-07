@@ -1,0 +1,34 @@
+services:
+
+  redis:
+    image: redis:latest
+    container_name: redis-container
+
+    ports:
+      - "6379:6379"
+
+    networks:
+      - rulex-network
+
+    volumes:
+      - redis-data:/data
+
+  rulex:
+    build: .
+    container_name: rulex-container
+
+    ports:
+      - "8081:8081"
+
+    depends_on:
+      - redis
+
+    networks:
+      - rulex-network
+
+networks:
+  rulex-network:
+    driver: bridge
+
+volumes:
+  redis-data:

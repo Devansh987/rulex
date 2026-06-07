@@ -1,12 +1,10 @@
 package com.rulex.rulex.Service;
 
 
-import com.rulex.rulex.Entity.Role;
 import com.rulex.rulex.Entity.User;
 import com.rulex.rulex.Exception.CustomException.UserNotFound;
 import com.rulex.rulex.Repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +17,12 @@ public class UserService {
     @Autowired
     private UserRepo userRepo;
 
-    private final PasswordEncoder passwordEncoder(){
-        return  new BCryptPasswordEncoder();
-    }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     public User saveNewUser(User user){
-        user.setPassword(passwordEncoder().encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
 
@@ -43,7 +40,7 @@ public class UserService {
     public User updateUser(String userName,User user1){
         User user = findByUserName(userName);
         user.setUserName(user1.getUserName());
-        user.setPassword(user1.getPassword());
+        user.setPassword(passwordEncoder.encode(user1.getPassword()));
         user.setRole(user1.getRole());
         user.setEmail(user1.getEmail());
         return userRepo.save(user);

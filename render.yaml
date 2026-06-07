@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: rulex
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: 8081
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_USERNAME
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: REDIS_URL
+        fromService:
+          name: rulex-redis
+          type: redis
+          property: connectionString
+    healthCheckPath: /actuator/health
+
+  - type: redis
+    name: rulex-redis
+    plan: free
+    maxmemoryPolicy: allkeys-lru

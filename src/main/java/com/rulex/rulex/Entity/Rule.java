@@ -50,8 +50,8 @@ public class Rule {
     private Policy policy;
 
     @NotNull
-    @Column(nullable = false)
-    private LocalDateTime created_at;
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
 
 
 }
