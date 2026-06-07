@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 @SpringBootTest
-public class ruleEngine {
+public class RuleEngineTest {
 
     @Autowired
     private EvaluationController evaluationController;
