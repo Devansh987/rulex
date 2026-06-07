@@ -47,7 +47,7 @@ public class WebSecurityConfig {
                 "http://localhost:5173",
                 "http://127.0.0.1:5173",
                 "http://localhost:3000",
-                "https://rulex-frontend.onrender.com",
+                "https://rulex-frontend-q83e.onrender.com",
                 "https://rulex-dq96.onrender.com"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
