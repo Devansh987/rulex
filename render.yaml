@@ -23,7 +23,7 @@ services:
           name: rulex-redis
           type: redis
           property: connectionString
-    healthCheckPath: /actuator/health
+   h
 
   - type: redis
     name: rulex-redis
