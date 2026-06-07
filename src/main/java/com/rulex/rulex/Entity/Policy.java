@@ -1,14 +1,12 @@
 package com.rulex.rulex.Entity;
 
-
-//import com.rulex.rulex.Entity.Tenant;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
 
 import java.time.LocalDateTime;
-@Data
+import java.util.Objects;
+
 @Entity
 @Table(
         name = "policies",
@@ -42,4 +40,86 @@ public class Policy {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    public Policy() {
+    }
+
+    // Getters and Setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getPolicyCode() {
+        return policyCode;
+    }
+
+    public void setPolicyCode(String policyCode) {
+        this.policyCode = policyCode;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Policy{" +
+                "id=" + id +
+                ", policyCode='" + policyCode + '\'' +
+                ", description='" + description + '\'' +
+                ", status='" + status + '\'' +
+                ", tenant=" + tenant +
+                ", createdAt=" + createdAt +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Policy policy = (Policy) o;
+        return Objects.equals(id, policy.id) &&
+                Objects.equals(policyCode, policy.policyCode) &&
+                Objects.equals(description, policy.description) &&
+                Objects.equals(status, policy.status) &&
+                Objects.equals(tenant, policy.tenant) &&
+                Objects.equals(createdAt, policy.createdAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, policyCode, description, status, tenant, createdAt);
+    }
 }
