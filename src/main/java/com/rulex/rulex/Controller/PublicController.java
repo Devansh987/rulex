@@ -35,7 +35,7 @@ public class PublicController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody User user) {
-        emailService.SendEmail(user.getEmail(),"Account Created Successfully","Your Account has been Created on rules You can use the application after login");
+//        emailService.SendEmail(user.getEmail(),"Account Created Successfully","Your Account has been Created on rules You can use the application after login");
         return new ResponseEntity<>(userService.saveNewUser(user), HttpStatus.OK);
     }
 
